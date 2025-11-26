@@ -12,7 +12,7 @@ INST        : durée d’insolation quotidienne (en mn)
 // DIFT        : rayonnement diffus quotidien (en J/cm2)
 DIRT        : rayonnement direct quotidien (en J/cm2)
 INFRART     : somme des rayonnements infra-rouge horaires (en J/cm2)
- UV          : cumul quotidien de rayonnement ultra-violet (en J/cm2)
+UV          : cumul quotidien de rayonnement ultra-violet (en J/cm2)
 // UV_INDICEX  : maximum des indices UV horaires
 // SIGMA       : fraction d’insolation par rapport à la durée du jour (en %)
 // UN          : minimum quotidien des humidités relatives minimales horaires (en %)
