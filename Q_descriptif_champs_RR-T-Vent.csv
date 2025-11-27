@@ -13,7 +13,7 @@ TM          : moyenne quotidienne des températures horaires sous abri (en °C e
 // TNTXM       : moyenne quotidienne (TN+TX)/2 (en °C et 1/10)
 // TAMPLI      : amplitude thermique quotidienne : écart entre TX et TN quotidiens (TX-TN) (en °C et 1/10)
 // TNSOL       : température quotidienne minimale à 10 cm au-dessus du sol (en °C et 1/10)
-TN50        : température quotidienne minimale à 50 cm au-dessus du sol (en °C et 1/10)
+// TN50        : température quotidienne minimale à 50 cm au-dessus du sol (en °C et 1/10)
 // DG          : durée de gel sous abri (T ≤ 0°C) (en mn)
 FFM         : moyenne quotidienne de la force du vent moyenné sur 10 mn, à 10 m (en m/s et 1/10)
 // FF2M        : moyenne quotidienne de la force du vent moyenné sur 10 mn, à 2 m (en m/s et 1/10)
