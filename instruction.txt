@@ -1,0 +1,28 @@
+Here is a description of the report that you have to deliver at the latest two days before the oral presentation that should last about a quarter of hour.
+
+In due time, I will open a 'Devoir' space on Ametice so that each team can upload its assignment. The assignment is in three parts: (1) a written report, (2) the used dataset, in a legible format, (3) The programs used in Stata, R or Python.
+
+There are two distinct project: A prediction exercise with cross section data; and a forecast exercise with time series data.
+
+List of tasks to do:
+
+1°/ Describe your topic and motivate it. What are you trying to know and predict? Why is it interesting?
+2°/ Describe your data, including details on the sources.
+3°/ Organize the data for statistical treatment.
+4°/ Choose and construct the variable that you want to predict. Why is it interesting? Explain its definition and justify it.
+5°/ Choose and construct the variables that you want to use as predicting variables. Why are they relevant? State their specifications and justify them. For time series, you can use lags of the dependent variable. In all cases, explain why your strategy looks good.
+6°/ Write the models that you want to estimate. In particuler, write the main equation, and indicate the theoretical restrictions on the conditional expectations and conditional variances of the errors. Are you assuming some parametric distributions?
+7°/ Choose an estimation method for this model. Give its formulae. What are its properties? Justify your choice. What are the problems that you met for this estimation. How are they relevant for the validity of the estimation results? And for the prediction results?
+8°/ Estimate the model, and provide estimation results. Comment the results briefly.
+9°/ Choose predictors based on this model. Give its formulae. Justify your choice. You must try different approaches, for example by changing the list of variables, the specific of the lags, the econometric method or the subsample used for the estimation.
+10°/ Run your predictions
+11°/ Perform cross-validation checks
+12°/ Present the selected predictions in a table and graphically.
+13°/ Estimate variances and confidence interval for the predictions.
+14°/ Compare your predictions by using several criteria (loss functions) and graphically. Decide on what the best prediction is and justify it. Why is it your preferred method.
+15°/ What are the alternative methods that you did not use? Why?
+16°/ Propose policy recommendations based on your results.
+ 
+Of course, this list of tasks is a lot. So, after you have been through all these stages, you may want to select the most interesting ones for the report. However, a constant requirement is to EXPLAIN what you do and why you do it. The report should not appear as a sequence of mindless automatic treatments. You must justify you methods and your results.
+ 
+The report will be assessed as if your team was a private research unit. You audience are the experts in a large firm or a large administration. So, you can expect that they have a smattering of statistics and economics. Still, you will need to be clear about your methods since they may not be specialists of them.
