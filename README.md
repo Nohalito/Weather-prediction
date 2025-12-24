@@ -6,7 +6,7 @@ For this project we will try both prediction and forecast methods on the weather
 
 ## 1°/ Repository structure :
 
-`
+```
 Weather-Prediction/
 ├── .gitignore
 ├── Data_processing_2.ipynb # 2nd Notebook : used to pre-processe the data
@@ -26,7 +26,7 @@ Weather-Prediction/
     └── raw
         ├── elec_consumption.csv
         └── weather_base_df.csv
-`
+```
 
 ## 2°/ Data :
 ### 2.1°/ Data source :
