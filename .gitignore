@@ -1,8 +1,8 @@
 # Ignore datasets :
 #datasets/
 #processed/
-datasets/midway/*
-datasets/raw/*
+datasets/midway/
+datasets/raw/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
