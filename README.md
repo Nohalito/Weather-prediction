@@ -21,6 +21,7 @@ For this project we will try both prediction and forecast methods on the weather
             - `predictive-methods\Scripts\activate`
             - `pip install -r requirements.txt`
     - Linux :
+        - Venv :
             - `python -m venv predictive-methods`
             - `source predictive-methods/bin/activate`
             - `pip install -r requirements.txt`
