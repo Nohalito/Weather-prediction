@@ -96,19 +96,22 @@ Our $2^{nd}$ source came from the ODRE (Open Data Réseaux Energie), on their <a
 #### 3.2.1°/ Forecast dataset :
 
 To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
-- Download all needed datasets from the url : $\underbrace{95}_{\text{departments}} * \underbrace{1}_{\text{period : 1950-2023}} * \underbrace{2}_{\text{features}} = \underbrace{190}_{\text{datasets}}$
+- Download all needed datasets from the url : $$ 95_{\text{departments}} \times 1_{\text{period: 1950–2023}} \times 2_{\text{features}} = 190_{\text{datasets}}
+$$
 - Drop useless columns in a theoritical point of view.
+- Keep only 10 years worth of data : 2013-2023
 - Merge the datasets
-- Drop features with insufficient completion rate (more than 20% null value)
+- Drop features with insufficient completion rate (more than 20 percent of null value)
+- Impute missing data
 - **Save a copy** for the **prediction dataset**
 - Keep only one feature for forecast (average temperature `TM`)
 - Keep only the PACA region department
 - Aggregate features by department
 
-**Time series dataset :** 
+**Time series dataset** : 
 
 | date | department name | temperature |
-|---|---|---|
+| --- | --- | --- |
 |2013-01-10 | Alpes-de-Haute-Provence | 2.623076923076923 |
 |2013-01-10 | Alpes-Maritimes | 5.396551724137931 |
 | ... | ... | ... |
@@ -119,6 +122,14 @@ To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
 #### 3.2.2°/ Prediction dataset :
 
 - Restart at our saved copy
-Our data came from the <a href = "https://www.data.gouv.fr/datasets/donnees-climatologiques-de-base-quotidiennes">Météo France</a> data base which is hosted on the data.gouv, the french official website for open data.
+- Aggregate by region
+- Download the energy consumption dataset
+- Merge the 2 datasets on date and region
 
-Those data, extracted in raw, represent the different weather indicators (temperature, UV exposure, rain... etc) measured by each weather station present in France. Note that the data are extracted daily and cover the period **2013 to 2023**. 
+**Panel dataset** :
+
+| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity | $Y : total_energy_consumption_MW$ |
+| --- | --- | --- | --- | --- |
+| 2013-01-01 | 4.795 | ... | 4.882 | 185715.0 |
+| 2013- 01-02 | 4.476 | ... | 0.038 | 267200.0 |
+| 2013- 01-03 | 4.670 | ... | 0.0201 | 281535.0 |
