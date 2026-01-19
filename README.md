@@ -96,8 +96,7 @@ Our $2^{nd}$ source came from the ODRE (Open Data Réseaux Energie), on their <a
 #### 3.2.1°/ Forecast dataset :
 
 To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
-- Download all needed datasets from the url : $$ 95_{\text{departments}} \times 1_{\text{period: 1950–2023}} \times 2_{\text{features}} = 190_{\text{datasets}}
-$$
+- Download all needed datasets from the url : 95 (departments) * 1(period: 1950–2023) * 2 (features) = 190 (datasets).
 - Drop useless columns in a theoritical point of view.
 - Keep only 10 years worth of data : 2013-2023
 - Merge the datasets
@@ -112,11 +111,11 @@ $$
 
 | date | department name | temperature |
 | --- | --- | --- |
-|2013-01-10 | Alpes-de-Haute-Provence | 2.623076923076923 |
-|2013-01-10 | Alpes-Maritimes | 5.396551724137931 |
+|2013-01-10 | Alpes-de-Haute-Provence | 2.623 |
+|2013-01-10 | Alpes-Maritimes | 5.396 |
 | ... | ... | ... |
-|2013-01-11 | Alpes-de-Haute-Provence | 3.269230769230769 |
-|2013-01-11 | Alpes-Maritimes | 5.872413793103449 |
+|2013-01-11 | Alpes-de-Haute-Provence | 3.269 |
+|2013-01-11 | Alpes-Maritimes | 5.872 |
 | ... | ... | ... |
 
 #### 3.2.2°/ Prediction dataset :
@@ -128,7 +127,7 @@ $$
 
 **Panel dataset** :
 
-| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity | $Y : total_energy_consumption_MW$ |
+| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity$ | $Y : total_energy_consumption_MW$ |
 | --- | --- | --- | --- | --- |
 | 2013-01-01 | 4.795 | ... | 4.882 | 185715.0 |
 | 2013- 01-02 | 4.476 | ... | 0.038 | 267200.0 |
