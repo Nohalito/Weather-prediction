@@ -1,11 +1,22 @@
-# Project : Weather-prediction
+Project : Predictive Methods
+============================
 
-This is a group project of our Econometric &amp; Data Science Master, more precisely, our *Predictive Methods* class.
+This is our group project of our Econometric &amp; Data Science Master, more precisely, our *Predictive Methods* class.
 
-For this project we will try both prediction and forecast methods on the weather.
+# 1°/ **Instruction for our Teacher** :
 
-## 2°/ Repository :
-### 2.1°/ Create a virtual environment that can run every notebooks :
+The 3 required parts of this project are :
+1. A written report :
+	=> ".pdf" file
+2. The programs used in Stata, R or Python :
+	=> "notebooks/" folder
+3. The used datasets, in a legible format" :
+	=> "datasets/processed/" folder
+    **Or**
+	=> You can run the two first notebooks "notebooks/01" and "notebooks/02" to download the raw data and clean them manually.
+
+# 2°/ Repository summary :
+## 2.1°/ How to use our code :
 
 - Open any terminal that can allow you to run git & environment command (For example mine was git bash)
 - Clone this project : `git clone https://github.com/Nohalito/Weather-prediction.git`
@@ -16,7 +27,7 @@ For this project we will try both prediction and forecast methods on the weather
             - `conda activate predictive-methods`
             - `pip install -r requirements.txt`
         - Venv (any window terminal, like PowerShell) =>
-            - Download python <a href = "https://www.python.org/downloads/release/python-3140/">3.14></a> using the "Windows installer (64-bit)".
+            - Download python <a href = "https://www.python.org/downloads/release/python-3140/">3.14</a> using the "Windows installer (64-bit)".
             - `py -3.14 -m predictive-methods`
             - `predictive-methods\Scripts\activate`
             - `pip install -r requirements.txt`
@@ -25,38 +36,37 @@ For this project we will try both prediction and forecast methods on the weather
             - `python -m venv predictive-methods`
             - `source predictive-methods/bin/activate`
             - `pip install -r requirements.txt`
-- Enjoy our work !
+- Enjoy our work by running any notebook that you want !
 
-### 2.2°/ Repository tree :
+## 2.2°/ Repository tree :
 
 ```
 Weather-Prediction/
 ├── .gitignore
 ├── MULLATOR.jpg
-├── Q_descriptif_champs_RR-T-Vent.txt
-├── Q_descriptif_champs_autres-parametres.txt
+├── Q_descriptif_champs_RR-T-Vent.txt               # Raw data features description
+├── Q_descriptif_champs_autres-parametres.txt       # Raw data features description
 ├── README.md
-├── instruction.txt
-├── model_pali_3.ipynb
+├── instruction.txt                                 # Project guideline
 ├── repo_tree.ipynb
-├── requirements.txt
-├── datasets
-│   ├── processed
+├── requirements.txt                                # virtual environment requirements
+├── datasets                                        # Datasets folder
+│   ├── processed                                       
 │   │   ├── cross_section_2013-2023.csv
 │   │   └── time_series_2013-2023.csv
 │   └── raw
 │       ├── elec_consumption.csv
 │       └── weather_base_df.csv
-├── notebooks
+├── notebooks                                       # All notebooks used
 │   ├── 1_Download_raw_data_Noa.ipynb
 │   ├── 2_Data_processing_Noa.ipynb
 │   ├── 3_Modeling_Diallo.ipynb
 │   └── 3_Modeling_Paligwende.ipynb
-└── results
+└── results                                         # Saved results from our code 
     ├── figures
     │   ├── Diallo_S1_IC_bootstrap_graph.png
     │   ├── [...]
-    │   └── Paligwende_selected_prediction_temp.png
+    │   └── Paligwende_selected_prediction_temp.png     
     ├── forecasts
     ├── logs
     │   ├── Diallo_S1_Q8_OLS_summary.txt
@@ -68,9 +78,47 @@ Weather-Prediction/
         └── Diallo_S2_Q9_model_comparison_holdout.csv
 ```
 
-## 2°/ Data :
-### 2.1°/ Data source :
+# 3°/ Data :
+## 3.1°/ Data source :
 
+For this project, we used two final datasets, a datasets for **Time-series** forecast and one for **Prediction**.
+
+The $1^{st}$ source is a compilation of multiple datasets from <a href = "https://www.data.gouv.fr/datasets/donnees-climatologiques-de-base-quotidiennes">Météo France</a>. This page host datasets with 3 partitionning methods :
+- By departments
+- By period (1852-1949, 1950-2023 and 2023-2026)
+- By features ("RR-T Vents" and "autres paramètres)
+
+Each datasets contain daily informations for all weather station on the selected department and time period, with the selected features.
+
+Our $2^{nd}$ source came from the ODRE (Open Data Réseaux Energie), on their <a href = "https://www.data.gouv.fr/datasets/consommation-quotidienne-brute-regionale">Gross Daily Regional Consumption</a> datasets.
+
+### 3.2°/ Data transformation :
+#### 3.2.1°/ Forecast dataset :
+
+To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
+- Download all needed datasets from the url : $\underbrace{95}_{\text{departments}} * \underbrace{1}_{\text{period : 1950-2023}} * \underbrace{2}_{\text{features}} = \underbrace{190}_{\text{datasets}}$
+- Drop useless columns in a theoritical point of view.
+- Merge the datasets
+- Drop features with insufficient completion rate (more than 20% null value)
+- **Save a copy** for the **prediction dataset**
+- Keep only one feature for forecast (average temperature `TM`)
+- Keep only the PACA region department
+- Aggregate features by department
+
+**Time series dataset :** 
+
+| date | department name | temperature |
+|---|---|---|
+|2013-01-10 | Alpes-de-Haute-Provence | 2.623076923076923 |
+|2013-01-10 | Alpes-Maritimes | 5.396551724137931 |
+| ... | ... | ... |
+|2013-01-11 | Alpes-de-Haute-Provence | 3.269230769230769 |
+|2013-01-11 | Alpes-Maritimes | 5.872413793103449 |
+| ... | ... | ... |
+
+#### 3.2.2°/ Prediction dataset :
+
+- Restart at our saved copy
 Our data came from the <a href = "https://www.data.gouv.fr/datasets/donnees-climatologiques-de-base-quotidiennes">Météo France</a> data base which is hosted on the data.gouv, the french official website for open data.
 
 Those data, extracted in raw, represent the different weather indicators (temperature, UV exposure, rain... etc) measured by each weather station present in France. Note that the data are extracted daily and cover the period **2013 to 2023**. 
