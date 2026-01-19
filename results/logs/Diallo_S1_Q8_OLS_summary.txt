@@ -1,0 +1,36 @@
+                                 OLS Regression Results                                
+=======================================================================================
+Dep. Variable:     total_energy_consumption_MW   R-squared:                       0.794
+Model:                                     OLS   Adj. R-squared:                  0.793
+Method:                          Least Squares   F-statistic:                     1446.
+Date:                         Mon, 19 Jan 2026   Prob (F-statistic):               0.00
+Time:                                 15:25:27   Log-Likelihood:                -35227.
+No. Observations:                         3012   AIC:                         7.047e+04
+Df Residuals:                             3003   BIC:                         7.053e+04
+Df Model:                                    8                                         
+Covariance Type:                     nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const        115.6741      2.356     49.105      0.000     111.055     120.293
+TM         -2566.5207     66.464    -38.615      0.000   -2696.841   -2436.201
+UM          3707.0344     42.213     87.817      0.000    3624.264    3789.805
+RR           -51.3270    106.853     -0.480      0.631    -260.840     158.186
+GLOT         -24.7072      1.776    -13.912      0.000     -28.189     -21.225
+INST          32.9495      5.741      5.740      0.000      21.694      44.206
+FFM         -526.4671    566.322     -0.930      0.353   -1636.886     583.952
+TM_c       -4099.9907     67.015    -61.180      0.000   -4231.391   -3968.590
+TM_c2        481.0551     13.869     34.685      0.000     453.861     508.249
+UM_c       -4125.4848    121.267    -34.020      0.000   -4363.259   -3887.710
+TMxUM        -32.4724      8.365     -3.882      0.000     -48.875     -16.070
+==============================================================================
+Omnibus:                       13.478   Durbin-Watson:                   1.984
+Prob(Omnibus):                  0.001   Jarque-Bera (JB):               11.118
+Skew:                           0.074   Prob(JB):                      0.00385
+Kurtosis:                       2.742   Cond. No.                     3.50e+18
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The smallest eigenvalue is 8.38e-28. This might indicate that there are
+strong multicollinearity problems or that the design matrix is singular.
