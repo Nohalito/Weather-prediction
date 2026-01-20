@@ -5,6 +5,13 @@ datasets/midway/
 datasets/raw/
 #final_dataset.csv
 
+# Ignore Latex file
+*.aux
+*.log
+*.out
+*.gz
+*.toc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

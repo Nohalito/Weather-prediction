@@ -7,7 +7,7 @@ This is our group project of our Econometric &amp; Data Science Master, more pre
 
 The 3 required parts of this project are :
 1. A written report :
-	=> ".pdf" file
+	=> "report/Al-Afia_Auguste_Boimond_Diallo_Ouedraogo.pdf" file
 2. The programs used in Stata, R or Python :
 	=> "notebooks/" folder
 3. The used datasets, in a legible format" :
@@ -62,9 +62,16 @@ Weather-Prediction/
 │   ├── 02_Data_processing_Noa.ipynb
 │   ├── 03.1_Modeling_Diallo.ipynb
 │   └── 03.2_Modeling_Paligwende.ipynb
+├── report
+│   ├── AlAfia_Auguste_Boimond_Diallo_Ouedraogo.pdf # Final pdf report
+│   ├── AlAfia_Auguste_Boimond_Diallo_Ouedraogo.tex 
+│   └── assets
+│       └── amse_logo_couleur_h600.png
 └── results                                         # Saved results from our code 
     ├── figures
     │   ├── Diallo_S1_IC_bootstrap_graph.png
+    │   ├── [...]
+    │   ├── Noa_Ramzi_pair_plot.png
     │   ├── [...]
     │   └── Paligwende_selected_prediction_temp.png     
     ├── forecasts
@@ -128,9 +135,9 @@ To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
 
 **Panel dataset** :
 
-| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity$ | Y : total_energy_consumption_MW |
-| --- | --- | --- | --- | --- |
-| 2013-01-01 | 4.795 | ... | 4.882 | 185715.0 |
-| 2013- 01-02 | 4.476 | ... | 0.038 | 267200.0 |
-| 2013- 01-03 | 4.670 | ... | 0.0201 | 281535.0 |
-| ... | ... | ... | ... | ... |
+| $\beta_1 : temperature$ | ... | $\beta_6 : humidity$ | Y : total_energy_consumption_MW |
+| --- | --- | --- | --- |
+| 4.795 | ... | 4.882 | 185715.0 |
+| 4.476 | ... | 0.038 | 267200.0 |
+| 4.670 | ... | 0.0201 | 281535.0 |
+| ... | ... | ... | ... |
