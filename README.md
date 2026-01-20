@@ -58,10 +58,10 @@ Weather-Prediction/
 │       ├── elec_consumption.csv
 │       └── weather_base_df.csv
 ├── notebooks                                       # All notebooks used
-│   ├── 1_Download_raw_data_Noa.ipynb
-│   ├── 2_Data_processing_Noa.ipynb
-│   ├── 3_Modeling_Diallo.ipynb
-│   └── 3_Modeling_Paligwende.ipynb
+│   ├── 01_Download_raw_data_Noa.ipynb
+│   ├── 02_Data_processing_Noa.ipynb
+│   ├── 03.1_Modeling_Diallo.ipynb
+│   └── 03.2_Modeling_Paligwende.ipynb
 └── results                                         # Saved results from our code 
     ├── figures
     │   ├── Diallo_S1_IC_bootstrap_graph.png
@@ -90,7 +90,7 @@ The $1^{st}$ source is a compilation of multiple datasets from <a href = "https:
 
 Each datasets contain daily informations for all weather station on the selected department and time period, with the selected features.
 
-Our $2^{nd}$ source came from the ODRE (Open Data Réseaux Energie), on their <a href = "https://www.data.gouv.fr/datasets/consommation-quotidienne-brute-regionale">Gross Daily Regional Consumption</a> datasets.
+Our $2^{nd}$ source came from the ODRE (Open Data Réseaux Energie), on their <a href = "https://www.data.gouv.fr/datasets/consommation-quotidienne-brute-regionale">Gross Daily Regional Consumption</a> dataset.
 
 ### 3.2°/ Data transformation :
 #### 3.2.1°/ Forecast dataset :
@@ -104,31 +104,33 @@ To obtain our $1^{st}$ processed dataset for forecast we proceed as follow :
 - Impute missing data
 - **Save a copy** for the **prediction dataset**
 - Keep only one feature for forecast (average temperature `TM`)
-- Keep only the PACA region department
+- Keep only the PACA region departments
 - Aggregate features by department
 
 **Time series dataset** : 
 
 | date | department name | temperature |
 | --- | --- | --- |
-|2013-01-10 | Alpes-de-Haute-Provence | 2.623 |
-|2013-01-10 | Alpes-Maritimes | 5.396 |
+|2013-01-01 | Alpes-de-Haute-Provence | 0.515 |
+|2013-01-01 | Alpes-Maritimes | 3.134 |
 | ... | ... | ... |
-|2013-01-11 | Alpes-de-Haute-Provence | 3.269 |
-|2013-01-11 | Alpes-Maritimes | 5.872 |
+|2013-01-02 | Alpes-de-Haute-Provence | 1.084 |
+|2013-01-02 | Alpes-Maritimes | 4.848 |
 | ... | ... | ... |
 
 #### 3.2.2°/ Prediction dataset :
 
 - Restart at our saved copy
-- Aggregate by region
+- Filter on PACA region
+- Aggregate on the remaining region
 - Download the energy consumption dataset
 - Merge the 2 datasets on date and region
 
 **Panel dataset** :
 
-| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity$ | $Y : total_energy_consumption_MW$ |
+| date | $\beta_1 : temperature$ | ... | $\beta_6 : humidity$ | Y : total_energy_consumption_MW |
 | --- | --- | --- | --- | --- |
 | 2013-01-01 | 4.795 | ... | 4.882 | 185715.0 |
 | 2013- 01-02 | 4.476 | ... | 0.038 | 267200.0 |
 | 2013- 01-03 | 4.670 | ... | 0.0201 | 281535.0 |
+| ... | ... | ... | ... | ... |
