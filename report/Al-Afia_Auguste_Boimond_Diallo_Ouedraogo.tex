@@ -216,7 +216,52 @@ $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
 % ------------------------ EDA ------------------------
 \section{Explanatory data analysis}
 
-XXXXXXXXXXXXXXXXXXXXXXX
+For our first view of our datasets, it can be summarized pretty quickly.
+
+Firstly, with the time series forecast exercise, we will try to check if there is 
+something to predict (seasonality, trend or cyclicity) :\par
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{../results/figures/Noa_dept_serie.png}
+\caption{Time series of the Bouche du Rhône average temperature}
+\label{fig:serie}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{../results/figures/Noa_Montly_temp_dept.png}
+\caption{Seasonal patern}
+\label{fig:season}
+\end{figure}
+
+These tables reveal 2 things :
+\begin{itemize}
+    \item Identical shape and patern (Up and down)
+    \item Fixed period of repetition (12 months)
+\end{itemize}
+This is exactly the definition of a seasonality ! Thus this will be our target for the 
+forecast exercise. We can further add that there is a trend (although almost invisible to the naked eye) of 
+rise in temperature, this could illustrate perfectly global warming.
+
+Secondly for the prediction part, we can observe the following table : \par
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{../results/figures/Noa_scatterplot_target.png}
+\caption{Features scatterplot with the target}
+\label{fig:scatterplot}
+\end{figure}
+
+As we had to restrict ourselve from using a lot of different features (due to extensively high
+missing value rate in the weather dataset), we only retained 6 defaults $\beta$.
+Here, a simple glance is enough to draw a few conclusion :
+\begin{itemize}
+    \item Some features are cleary uncorrelated to the target (a more in-depth analysis \cite{Whatever 4}) 
+    \item We can expect to find non-linearity in the relation (J-shaped curve with $\beta_{TM}$)
+\end{itemize}
+Meaning, that coming up with prediction with this few information, might be challenging
+in both a methodological and theoretical point of view (lack of meaning).
 
 % ------------------------ Feature selection ------------------------
 \section{Variable selection and empirical strategy}
@@ -594,9 +639,18 @@ ODRE. \href{https://www.data.gouv.fr/datasets/consommation-quotidienne-brute-reg
     \item \textbf{UM}: Moyenne quotidienne des humidités relatives horaires, exprimée en pourcentage (\%).
 \end{itemize}
 
+\bibitem{Whatever 4}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{../results/figures/Noa_correlation.png}
+\caption{Correlation Matrix}
+\label{fig:correlation}
+\end{figure}
+
+\bibitem{Whatever}
+SDES. \href{https://www.statistiques.developpement-durable.gouv.fr/edition-numerique/chiffres-cles-energie/fr/6-bilan-energetique-de-la-france}
+{\textit{Bilan énergétique de la France | Chiffres clés de l'énergie - Édition 2025.}}
+
 \end{thebibliography}
 
 \end{document}
-%\bibitem{Whatever}
-%SDES. \href{https://www.statistiques.developpement-durable.gouv.fr/edition-numerique/chiffres-cles-energie/fr/6-bilan-energetique-de-la-france}
-%{\textit{Bilan énergétique de la France | Chiffres clés de l'énergie - Édition 2025.}}
