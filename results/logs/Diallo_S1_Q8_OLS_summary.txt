@@ -3,8 +3,8 @@
 Dep. Variable:     total_energy_consumption_MW   R-squared:                       0.794
 Model:                                     OLS   Adj. R-squared:                  0.793
 Method:                          Least Squares   F-statistic:                     1446.
-Date:                         Tue, 20 Jan 2026   Prob (F-statistic):               0.00
-Time:                                 15:51:33   Log-Likelihood:                -35227.
+Date:                         Wed, 21 Jan 2026   Prob (F-statistic):               0.00
+Time:                                 10:52:09   Log-Likelihood:                -35227.
 No. Observations:                         3012   AIC:                         7.047e+04
 Df Residuals:                             3003   BIC:                         7.053e+04
 Df Model:                                    8                                         

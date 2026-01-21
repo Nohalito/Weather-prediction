@@ -2,8 +2,8 @@
 ==========================================================================================
 Dep. Variable:                                 TM   No. Observations:                  105
 Model:             SARIMAX(1, 0, 1)x(1, 1, 1, 12)   Log Likelihood                -137.101
-Date:                            Tue, 20 Jan 2026   AIC                            284.203
-Time:                                    15:51:34   BIC                            296.050
+Date:                            Wed, 21 Jan 2026   AIC                            284.203
+Time:                                    10:52:10   BIC                            296.050
 Sample:                                01-01-2013   HQIC                           288.949
                                      - 09-01-2021                                         
 Covariance Type:                              opg                                         
