@@ -13,10 +13,16 @@
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
-
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{csvsimple}
 
 \geometry{margin=1in}
 \onehalfspacing
+
+% Coloring :
+\definecolor{Section}{RGB}{47, 89, 229}
+
 
 % -------------------------
 % Title Information
@@ -101,21 +107,21 @@ practice and course guidelines.
 \subsection{Related literature}
 
 A large body of empirical literature documents the strong link between weather conditions and energy
-consumption. Early studies such as \textbf{Bessec and Fouquau (2008)} show that temperature–energy
+consumption. Early studies such as Bessec and Fouquau (2008) show that temperature energy
 relationships are inherently non-linear, reflecting asymmetric heating and cooling needs. More recent
-contributions, including \textbf{Auffhammer et al. (2017)} and \textbf{Deschênes and Greenstone (2011)},
+contributions, including Auffhammer et al. (2017) and Deschênes and Greenstone (2011),
 emphasize the growing sensitivity of energy demand to extreme temperatures in the context of climate
 change.
 
 From a methodological perspective, cross-sectional and panel regression models using weather
-variables have been widely employed for short-term energy demand forecasting (see \textbf{Hong et al.,
-2016}). These models are valued for their interpretability and their ability to incorporate rich
+variables have been widely employed for short-term energy demand forecasting (see Hong et al.,
+2016). These models are valued for their interpretability and their ability to incorporate rich
 meteorological information, but they may suffer from multicollinearity and limited ability to capture
 temporal dependence.
 
 In parallel, time series models such as ARIMA and SARIMA have long been used to forecast
-meteorological variables, particularly temperature, due to their strong seasonal structure (\textbf{Box et al.,
-2015}). Seasonal naïve models provide a natural benchmark, but more flexible stochastic models often
+meteorological variables, particularly temperature, due to their strong seasonal structure (Box et al.,
+2015). Seasonal naïve models provide a natural benchmark, but more flexible stochastic models often
 yield superior predictive performance by exploiting short-term persistence in the data.
 
 \subsection{Contribution and structure of the report}
@@ -142,10 +148,9 @@ on the implications of the results for predictive modeling.
 \subsection{Data description}
 \subsubsection{Data sources}
 
-The data used in this study come from the Météo France\cite{Meteo_france} database, accessed through the official
+The data used in this study come from the Météo France \cite{Meteo_france} database, accessed through the official
 French open data platform data.gouv.fr. Météo France is the national meteorological service of France
-and provides Meteorological data were obtained from the Météo France database, hosted on data.gouv.fr, the
-French official open data portal. This dataset contains daily observations collected by weather stations
+and provides Meteorological data. This dataset contains daily observations collected by weather stations
 located across metropolitan France over the period from 2013 to 2023. The data include several
 weather indicators such as temperature, precipitation, and other atmospheric variables. In this study,
 particular attention is given to daily mean temperature, as it is a key determinant of heating and cooling
@@ -167,7 +172,7 @@ inactive or unreliable stations.
 
 For the purpose of this study, two different data structures were constructed depending on the
 modeling objective. For time-series analysis, the data were reshaped to obtain daily temperature
-series at the department level for the Provence–Alpes–Côte d’Azur (PACA) region. After filtering active
+series at the department level for the Provence-Alpes-Côte d’Azur (PACA) region. After filtering active
 stations, daily temperatures were aggregated by department using the mean across stations. In this
 setting, the data take the form of multivariate time-series data, where each department is observed
 repeatedly over time and each observation represents the daily average temperature of a given
@@ -213,6 +218,7 @@ Date & Department name & Temperature \\
 With the time series forecast exercise, we will try to check if there is 
 something to predict (seasonality, trend or cyclicity) :\par
 
+\newpage
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{../results/figures/Noa_dept_serie.png}
@@ -323,6 +329,7 @@ is stationary, despite the presence of a stable annual seasonal pattern. Therefo
 differencing is required before estimating time-series models, and seasonality can be directly
 modeled within a SARIMA framework.
 
+\newpage
 \begin{figure}[h]
 \centering
 \includegraphics[width=1.1\textwidth]{../results/figures/Diallo_SARIMA_illustration.png}
@@ -345,7 +352,7 @@ denoted $TM_t$. As a baseline, a seasonal naïve forecasting model is used, defi
 \end{center}
 This approach predicts the temperature of a given month using the observed value from the same
 month of the previous year. It provides a minimal benchmark against which the performance gains
-of more sophisticated models can be evaluated. \par
+of more sophisticated models can be evaluated. \\
 \textit{SARIMA model} \\
 To jointly capture short-term temporal dependence and the pronounced annual seasonality
 observed in the data, a SARIMA model is considered. The specification is :
@@ -369,31 +376,33 @@ using RMSE and MAE criteria.
 
 \subsubsection{Estimation methods}
 
-In the time-series framework, the SARIMA model is estimated using \textbf{Maximum Likelihood Estimation
-(MLE)}. This method consists in selecting the model parameters that maximize the conditional likelihood of
+In the time-series framework, the SARIMA model is estimated using Maximum Likelihood Estimation
+(MLE). This method consists in selecting the model parameters that maximize the conditional likelihood of
 the observed series, given the information available up to time $t - 1$.
 Let $F_{t-1}$ denote the information set generated by past observations, and let $\epsilon_t$ be the innovation term. The
-central assumption of the model is :\par
-\hfill $\textbf{E}(\epsilon_t \mid F_{t-1}) = 0$ \hfill (6) \\
+central assumption of the model is :
+\begin{center}
+    $\textbf{E}(\epsilon_t \mid F_{t-1}) = 0$
+\end{center}
 which implies that forecast errors are not predictable using past information.
 
 Under the standard SARIMA assumptions, the innovations $\epsilon_t$ are uncorrelated, have zero mean and constant
 variance, and are generally assumed to follow a Gaussian distribution for inference purposes. Under these
 conditions, Maximum Likelihood Estimation provides efficient estimators of the model parameters.
 
-MLE estimation also allows the direct derivation of \textbf{point forecasts} for the temperature series $TM_t$, as well
+MLE estimation also allows the direct derivation of point forecasts for the temperature series $TM_t$, as well
 as prediction intervals, which quantify the uncertainty associated with the forecasts. In this project, the
 model is estimated on a training sample, and its predictive performance is evaluated out-of-sample and
 compared to that of the seasonal naïve benchmark using RMSE and MAE criteria. \\
  \\
 \textit{Why Maximum Likelihood Estimation ?} \par
 In time-series forecasting, the objective is not only to explain the variable of interest but primarily
-to produce \textbf{optimal forecasts conditional on past information}. SARIMA models belong to the class
-of \textbf{stochastic dynamic models}, in which the observed variable depends on its past values,
+to produce optimal forecasts conditional on past information. SARIMA models belong to the class
+of stochastic dynamic models, in which the observed variable depends on its past values,
 unobserved random innovations, and, when relevant, seasonal components.
 
 In this context, Maximum Likelihood Estimation is the natural estimation method, as it relies
-directly on the \textbf{conditional distribution of the series given past information}. The likelihood function
+directly on the conditional distribution of the series given past information. The likelihood function
 measures the probability of observing the realized trajectory of the series conditional on the model
 parameters. Maximizing this likelihood therefore amounts to choosing the parameters that make
 the observed data the most plausible, given the temporal dynamics imposed by the model.
@@ -418,7 +427,7 @@ the past realizations of the series, within a univariate time series framework.
 Exploratory analysis reveals a strong and stable annual seasonality, with systematic temperature
 peaks during summer months and troughs during winter months, and no clear evidence of a
 deterministic long-term trend. These visual findings are confirmed by formal stationarity tests: the
-augmented Dickey–Fuller test rejects the null hypothesis of a unit root, while the KPSS test does not
+augmented Dickey-Fuller test rejects the null hypothesis of a unit root, while the KPSS test does not
 reject the null hypothesis of stationarity. Taken together, these results indicate that the series can be
 modeled in levels, provided that seasonality is explicitly incorporated.
 
@@ -426,7 +435,7 @@ On this basis, a SARIMA model is adopted to capture both short-term temporal dep
 annual seasonal patterns. The selected specification is a SARIMA(1,0,1) $\times$ (1,1,1)$_{12}$, reflecting
 monthly data with a twelve-month seasonal cycle. The model is estimated by maximum likelihood.
 
-The estimation results highlight the importance of seasonal dynamics. Seasonal autoregressive and
+The estimation results \textbf{\cite{SARIMA}\cite{RMSE_SARIMAN}} highlight the importance of seasonal dynamics. Seasonal autoregressive and
 moving average parameters are statistically significant, confirming strong dependence between
 observations separated by one year. The non-seasonal moving average term is also significant,
 indicating that temperature shocks have a short-lived impact on the series. The residual variance is
@@ -561,18 +570,14 @@ difficult to predict.
 \subsection{Data description}
 \subsubsection{Data sources}
 
-The data used in this part of the project come from Open Data Réseaux Énergies (ODRÉ) \cite{ODRE}. This source
+The energy data used in this part of the project come from Open Data Réseaux Énergies (ODRÉ) \cite{ODRE}. This source
 is publicly available through official French open data platforms and provide reliable, high-quality
 information relevant to the study of energy demand and its relationship with weather conditions.
-
-Energy-related data were sourced from the Open Data Réseaux Énergies (ODRÉ) platform. ODRÉ is a
-public initiative that provides open-access data related to energy production, consumption,
-infrastructure, markets, and territories in France.
 
 \subsubsection{Data description and pre-processing}
 
 The energy data used in this study take the form of \textbf{aggregated univariate time-series data}. Each
-observation represents total daily energy consumption in the Provence–Alpes–Côte d’Azur (PACA)
+observation represents total daily energy consumption in the Provence-Alpes-Côte d’Azur (PACA)
 region on a given date. The data are ordered over time and recorded at a daily frequency, making them
 well suited for temporal analysis and forecasting.
 
@@ -629,7 +634,7 @@ in both a methodological and theoretical point of view (lack of meaning).
 % ------------------------ Variable selection and empirical strategy ------------------------
 \subsection{Variable selection and empirical strategy}
 
-For the cross section part (energy) of this project, the dependent variable in this study is total
+The dependent variable in this study is total
 energy consumption, denoted $Y_i$ , measured in megawatts (MW). It corresponds to the
 variable $total\_energy\_consumption\_MW$ in the final dataset. It represents the sum of gross
 electricity consumption and gross gas consumption, aggregated at a daily frequency for the PACA
@@ -639,7 +644,7 @@ perspective, the variable exhibits substantial temporal variability and pronounc
 patterns, making it well suited for econometric analysis and prediction. \par
 
 The explanatory variables are derived from daily meteorological observations provided by Météo
-France. They include average daily temperature (TM, in °C), average humidity (UM, in \%),
+France. They include average daily temperature (TM, in Celsius), average humidity (UM, in \%),
 precipitation (RR, in mm), wind speed (FFM, in m/s), global solar radiation (GLOT, in Wh/m²), and
 sunshine duration (INST, in hours)\cite{feat_desc}. These variables are expected to influence energy consumption
 through several channels: temperature directly affects heating and cooling demand, humidity
@@ -737,13 +742,13 @@ variables are equally relevant for predicting energy consumption.
 Finally, model selection is based on out-of-sample predictive performance, in accordance with the
 project guidelines. The OLS, Ridge, and Lasso models are compared using standard loss criteria
 such as the Root Mean Squared Error (RMSE) and the Mean Absolute Error (MAE). The final
-choice relies on a bias–variance trade-off and on the ability of the model to generalize beyond the
+choice relies on a bias-variance trade-off and on the ability of the model to generalize beyond the
 estimation sample.
 
 % ------------------------ Estimation results ------------------------
 \subsection{Estimation results}
 
-This subsection presents the estimation results for daily energy consumption using a cross-sectional
+This subsection presents the estimation results \textbf{\cite{OLS}\cite{RMSE_OLS}} for daily energy consumption using a cross-sectional
 framework. The dependent variable is total daily energy consumption, measured in megawatts,
 constructed as the sum of gross electricity and gas consumption. It provides a comprehensive
 indicator of overall energy demand.
@@ -754,7 +759,7 @@ selected based on their expected influence on heating, cooling, lighting, and ot
 energy uses. This choice is fully consistent with the exploratory analysis, which highlights strong
 correlations between weather conditions and energy consumption.
 
-Given evidence of non-linearity in the temperature–energy relationship, the empirical specification
+Given evidence of non-linearity in the temperature-energy relationship, the empirical specification
 incorporates a quadratic temperature term as well as an interaction between temperature and
 humidity. These terms allow the model to capture increased energy demand at temperature extremes
 and to account for the fact that temperature effects may vary with humidity levels. All continuous
@@ -961,6 +966,44 @@ ODRE. \href{https://www.data.gouv.fr/datasets/consommation-quotidienne-brute-reg
 \bibitem{SDES}
 SDES. \href{https://www.statistiques.developpement-durable.gouv.fr/edition-numerique/chiffres-cles-energie/fr/6-bilan-energetique-de-la-france}
 {\textit{Bilan énergétique de la France | Chiffres clés de l'énergie - Édition 2025.}}
+
+\bibitem{OLS}
+\verbatiminput{../results/logs/Diallo_S1_Q8_OLS_summary.txt}
+
+\bibitem{SARIMA}
+\verbatiminput{../results/logs/Diallo_S2_Q9_SARIMA_summary.txt}
+
+\bibitem{RMSE_OLS}
+\begin{table}[htbp]
+\centering
+\caption{Model Performance on Test Set}
+\label{tab:model_performance}
+\begin{tabular}{lcc}
+\hline
+Model & RMSE$_{\text{test}}$ & MAE$_{\text{test}}$ \\
+\hline
+OLS   & 29133.79 & 23529.47 \\
+Ridge & 29135.15 & 23538.39 \\
+Lasso & 29142.80 & 23551.10 \\
+\hline
+\end{tabular}
+\end{table}
+
+\bibitem{RMSE_SARIMAN}
+\begin{table}[htbp]
+\centering
+\caption{Rolling Forecast Model Performance}
+\label{tab:rolling_models}
+\begin{tabular}{lcc}
+\hline
+Model & RMSE & MAE \\
+\hline
+ETS (rolling)              & 1.32 & 1.06 \\
+SARIMA (rolling)           & 1.39 & 1.09 \\
+Naïf saisonnier (rolling)  & 1.98 & 1.62 \\
+\hline
+\end{tabular}
+\end{table}
 
 \bibitem{Whatever}
 Auffhammer, M., Baylis, P., \& Hausman, C. (2017). \textit{Climate change is projected to have severe impacts on
