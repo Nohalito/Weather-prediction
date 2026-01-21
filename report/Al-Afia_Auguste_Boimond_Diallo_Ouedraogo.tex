@@ -319,6 +319,21 @@ The alternative hypothesis is :
 \begin{center}
     $H_1^{KPSS}$ : the series is non-stationary.
 \end{center}
+
+\begin{table}[htbp]
+\centering
+\caption{stationarity test}
+\label{tab:rolling_models}
+\begin{tabular}{lcc}
+\hline
+ADF statistic & -4.28680988275279 \\
+ADF p-value & 0.00046816426918247316 \\
+KPSS statistic & 0.07733938453287341 \\
+KPSS p-value & 0.1 \\
+\hline
+\end{tabular}
+\end{table}
+
 The KPSS test produces a test statistic of 0.077 with a p-value of 0.10. As a result, the null
 hypothesis of stationarity cannot be rejected. The warning message indicates that the test statistic
 is very small and that the true p-value is even larger than the reported value, which further
@@ -329,7 +344,6 @@ is stationary, despite the presence of a stable annual seasonal pattern. Therefo
 differencing is required before estimating time-series models, and seasonality can be directly
 modeled within a SARIMA framework.
 
-\newpage
 \begin{figure}[h]
 \centering
 \includegraphics[width=1.1\textwidth]{../results/figures/Diallo_SARIMA_illustration.png}
@@ -435,7 +449,22 @@ On this basis, a SARIMA model is adopted to capture both short-term temporal dep
 annual seasonal patterns. The selected specification is a SARIMA(1,0,1) $\times$ (1,1,1)$_{12}$, reflecting
 monthly data with a twelve-month seasonal cycle. The model is estimated by maximum likelihood.
 
-The estimation results \textbf{\cite{SARIMA}\cite{RMSE_SARIMAN}} highlight the importance of seasonal dynamics. Seasonal autoregressive and
+\begin{table}[htbp]
+\centering
+\caption{SARIMA Model Performance}
+\label{tab:rolling_models}
+\begin{tabular}{lcc}
+\hline
+Model & RMSE & MAE \\
+\hline
+ETS (rolling)              & 1.32 & 1.06 \\
+SARIMA (rolling)           & 1.39 & 1.09 \\
+Naïf saisonnier (rolling)  & 1.98 & 1.62 \\
+\hline
+\end{tabular}
+\end{table}
+
+The estimation results \textbf{\cite{SARIMA}} highlight the importance of seasonal dynamics. Seasonal autoregressive and
 moving average parameters are statistically significant, confirming strong dependence between
 observations separated by one year. The non-seasonal moving average term is also significant,
 indicating that temperature shocks have a short-lived impact on the series. The residual variance is
@@ -457,6 +486,83 @@ As in the cross-sectional analysis, the interpretation of the estimated paramete
 predictive. The results show that temperature follows a well-structured temporal process dominated
 by stable seasonality and short-term dependence, and that SARIMA models provide an effective
 framework for medium-term temperature forecasting.
+
+% ------------------------ Cross-validation ------------------------
+\subsection{Cross-validation}
+
+cross-validation must take into account the temporal structure of the data. A 
+classic K-fold cross-validation procedure is not appropriate, as it would violate 
+the chronological order of the observations and introduce information leakage.
+
+A temporal cross-validation strategy was therefore adopted, based on a rolling 
+window approach. At each iteration, the model is estimated over an initial 
+learning period and then used to produce forecasts for the following period. 
+The learning window is then moved forward in time, and the operation is 
+repeated.
+
+This method makes it possible to evaluate the stability of predictive 
+performance over time and to verify the model's ability to adapt to new 
+observations. Forecast errors are calculated at each iteration and aggregated 
+over the entire validation period.
+
+The results show that the SARIMA model performs relatively consistently 
+across the different validation windows, with RMSE and MAE values consistent 
+with those obtained in the initial out-of-sample evaluation. The naive 
+seasonal model also performs consistently, but with systematically higher 
+errors.
+
+These results confirm that the performance gain observed for the SARIMA model 
+is not due to chance or a particular sample split, but reflects a robust 
+improvement in forecast quality.
+
+Temporal cross-validation thus validates the choice of the SARIMA model as 
+the final forecasting method for average temperature.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{../results/figures/Diallo_S2_Q11_RMSE_comparison.png}
+\caption{RMSE}
+\label{fig:CV}
+\end{figure}
+
+Temporal cross-validation using rolling windows allows us to evaluate the 
+robustness of the predictive performance of different average temperature 
+forecasting models. This approach respects the chronological order of 
+observations and is a method suited to time series.
+
+The results show that the naive seasonal model performs the worst, with an 
+RMSE of approximately 1.98 and an MAE of approximately 1.62. Although this 
+model manages to capture the overall seasonal structure of the series, it does 
+not take into account short-term fluctuations and interannual variations, 
+which limits its predictive capacity.
+
+The SARIMA model significantly improves performance compared to the naive 
+benchmark. The RMSE obtained is approximately 1.41 and the MAE is approximately 
+1.09, indicating a substantial reduction in forecast errors. This improvement 
+reflects the model's ability to exploit not only annual seasonality but also 
+the short-term temporal dependencies present in the series.
+
+The exponential smoothing (ETS) model performs best among the methods 
+compared, with an RMSE of approximately 1.32 and an MAE of approximately 1.06. 
+The results suggest that explicitly decomposing the series into level and 
+seasonality components effectively captures the dynamics of the average 
+temperature over the validation period.
+
+Analysis of the forecast error graph for the SARIMA model shows that errors 
+are generally centered around zero, with no apparent systematic drift. The 
+fluctuations observed remain moderate in amplitude, indicating good forecast 
+stability over time, despite a few isolated episodes of higher errors.
+
+Overall, time cross-validation confirms that the SARIMA and ETS models offer 
+robust predictive performance that is superior to that of the naive seasonal 
+model. The slight advantage observed for the ETS model suggests that explicit 
+modeling of seasonality and level is particularly appropriate in this context. 
+However, the similar performance of the ETS and SARIMA models indicates that 
+both approaches are relevant choices for forecasting average temperature.
+
+These results confirm that the conclusions drawn during the initial out-of-sample 
+evaluation do not depend on a particular sample split, but reflect a robust 
+improvement in forecast quality.
 
 % ------------------------ Comparison of Models and Choice of the Forecasting Method ------------------------
 \subsection{Comparison of Models and Choice of the Forecasting Method}
@@ -737,7 +843,13 @@ cost of a controlled bias, and improves the stability of the estimated coefficie
 \end{center}
 Unlike Ridge regression, Lasso performs automatic variable selection by allowing some
 coefficients to be exactly zero. This feature is particularly useful when not all meteorological
-variables are equally relevant for predicting energy consumption.
+variables are equally relevant for predicting energy consumption. \\
+\\
+\textbf{Generalized additive model} authorize non-linear relation between energy consumption et some weather features :\par
+\begin{center}
+    $Y_i = \alpha + \sum_{j}^{}f_j(X_{ij}) + \epsilon_i$
+\end{center}
+
 
 Finally, model selection is based on out-of-sample predictive performance, in accordance with the
 project guidelines. The OLS, Ridge, and Lasso models are compared using standard loss criteria
@@ -748,7 +860,7 @@ estimation sample.
 % ------------------------ Estimation results ------------------------
 \subsection{Estimation results}
 
-This subsection presents the estimation results \textbf{\cite{OLS}\cite{RMSE_OLS}} for daily energy consumption using a cross-sectional
+This subsection presents the estimation results \cite{OLS} for daily energy consumption using a cross-sectional
 framework. The dependent variable is total daily energy consumption, measured in megawatts,
 constructed as the sum of gross electricity and gas consumption. It provides a comprehensive
 indicator of overall energy demand.
@@ -800,6 +912,85 @@ causal effects. Overall, the analysis confirms that meteorological variables—e
 and humidity—are key drivers of energy consumption and that relatively parsimonious models can
 yield reliable forecasts when properly specified and evaluated out of sample.
 
+\begin{table}[htbp]
+\centering
+\caption{Model Performance on Test Set}
+\label{tab:model_performance}
+\begin{tabular}{lcc}
+\hline
+Model & RMSE$_{\text{test}}$ & MAE$_{\text{test}}$ \\
+\hline
+OLS   & 29133.79 & 23529.47 \\
+Ridge & 29135.15 & 23538.39 \\
+Lasso & 29142.80 & 23551.10 \\
+\hline
+\end{tabular}
+\end{table}
+
+% ------------------------ Cross-validation ------------------------
+\subsection{Cross-validation}
+To assess the robustness of the predictive performance of the models estimated for 
+energy consumption, a cross-validation procedure was implemented. The objective 
+is to verify that the results obtained do not depend on a particular division of 
+the sample and that they generalize correctly to new observations.
+
+A K-fold cross-validation strategy is used. The sample is divided 
+into several subsamples, and at each iteration, one subsample is reserved for 
+prediction while the others are used for model estimation. The prediction errors are 
+then aggregated across all folds.
+
+This procedure is applied to linear models (OLS, Ridge, Lasso) as well as to the nonlinear GAM model. 
+The comparison focuses on the average RMSE and MAE, as well as their variability 
+between folds.
+
+The results show that the performance of the models is relatively stable from one fold to 
+another, indicating an absence of overfitting. The GAM model performs 
+comparably, if not slightly better, while maintaining good robustness. This cross-validation 
+confirms that the choice of model does not depend on a particular data split, but 
+reflects a satisfactory generalization ability.
+
+\begin{table}[ht]
+\centering
+\caption{Model Performance Comparison}
+\label{tab:model_performance}
+\begin{tabular}{lcc}
+\hline
+Model & RMSE & MAE \\
+\hline
+GAM (pyGAM) & 28761.99 & 23249.28 \\
+RidgeCV & 36164.32 & 29744.00 \\
+OLS & 36165.02 & 29738.86 \\
+LassoCV & 36165.46 & 29753.03 \\
+\hline
+\end{tabular}
+\end{table}
+
+K-fold cross-validation applied to the GAM model allows us to evaluate the 
+robustness of its predictive performance on different partitions of the 
+sample. Five folds were used, each successively acting as a test sample.
+
+The results show that the RMSE values obtained on the different folds are 
+relatively close, ranging from approximately 27,900 to 29,000 MW. Similarly, 
+the MAE values vary within a limited range, from approximately 22,500 to 
+23,950 MW. This low dispersion of errors between folds indicates that the 
+model's performance does not depend on a particular sample split.
+
+The average RMSE from cross-validation is approximately 28,741 MW, with a 
+standard deviation of approximately 604 MW. The average MAE is approximately 
+23,225 MW, with a standard deviation of approximately 593 MW. These relatively 
+low standard deviations compared to the average level of errors suggest good 
+stability in the predictive performance of the GAM model.
+
+These results confirm that the GAM model does not suffer from overfitting and 
+that it generalizes correctly to new observations. They are consistent with 
+the out-of-sample performance observed previously and validate the choice of 
+this model as a tool for forecasting energy consumption.
+
+In conclusion, cross-validation reinforces the credibility of the chosen model 
+by showing that its predictive capacity is robust and stable, while benefiting 
+from the flexibility offered by nonlinear modeling of the relationships between 
+energy consumption and meteorological variables.
+
 % ------------------------ Comparison of Models and Choice of the Forecasting Method ------------------------
 \subsection{Comparison of Models and Choice of the Forecasting Method}
 
@@ -847,7 +1038,7 @@ extreme demand episodes remain difficult to anticipate using these variables alo
 \newpage
 \begin{figure}[h]
 \centering
-\includegraphics[width=1\textwidth]{../results/figures/Paligwende_selected_prediction_energy.png}
+\includegraphics[width=1\textwidth]{../results/figures/Diallo_S1_Q12_selected_predictions_scatter.png}
 \caption{Forecast of energy consumption: observed Vs predicted values (test sample)}
 \label{fig:RealVsPredicted}
 \end{figure}
@@ -972,38 +1163,6 @@ SDES. \href{https://www.statistiques.developpement-durable.gouv.fr/edition-numer
 
 \bibitem{SARIMA}
 \verbatiminput{../results/logs/Diallo_S2_Q9_SARIMA_summary.txt}
-
-\bibitem{RMSE_OLS}
-\begin{table}[htbp]
-\centering
-\caption{Model Performance on Test Set}
-\label{tab:model_performance}
-\begin{tabular}{lcc}
-\hline
-Model & RMSE$_{\text{test}}$ & MAE$_{\text{test}}$ \\
-\hline
-OLS   & 29133.79 & 23529.47 \\
-Ridge & 29135.15 & 23538.39 \\
-Lasso & 29142.80 & 23551.10 \\
-\hline
-\end{tabular}
-\end{table}
-
-\bibitem{RMSE_SARIMAN}
-\begin{table}[htbp]
-\centering
-\caption{Rolling Forecast Model Performance}
-\label{tab:rolling_models}
-\begin{tabular}{lcc}
-\hline
-Model & RMSE & MAE \\
-\hline
-ETS (rolling)              & 1.32 & 1.06 \\
-SARIMA (rolling)           & 1.39 & 1.09 \\
-Naïf saisonnier (rolling)  & 1.98 & 1.62 \\
-\hline
-\end{tabular}
-\end{table}
 
 \bibitem{Whatever}
 Auffhammer, M., Baylis, P., \& Hausman, C. (2017). \textit{Climate change is projected to have severe impacts on
